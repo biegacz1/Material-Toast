@@ -14,6 +14,10 @@ export default {
         interactionTimeout: null,
         // if requires interaction, set the value like 'UNDO'
         actionText: 'OK',
+        actionIcoSrc: '',
+        statusIcoSrc: '',
+        messageClass: '',
+        beforeClass: 'toast-before',
         // callback action for the user interaction, hides toast by default
         action: function () {
             this.hide()

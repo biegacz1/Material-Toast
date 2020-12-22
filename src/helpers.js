@@ -62,7 +62,7 @@ export function createElem(tag, className, content, isHtml) {
  * Builds the toast UI
  */
 export function buildUI () {
-    var _ = this, _options = _.options, content, actionBtn,
+    var _ = this, _options = _.options, content, before, close, status, statusIcon, actionBtn,
         // global event handler
         evtHandler = function (e) {
             if (e.target.matches('.mdt-action')) {
@@ -79,16 +79,26 @@ export function buildUI () {
     if (_options.type !== 'default')
         _.toast.classList.add('mdt--' + _options.type)
 
-    content = createElem('div', 'mdt-message', _.message, true)
+    before = createElem('div', _options.beforeClass)
+    status = createElem('div', 'toast-status')
+    statusIcon = createElem('img', 'toast-status-ico')
+    statusIcon.src = _options.statusIcoSrc;
+    status.appendChild(statusIcon)
+    content = createElem('div', _options.messageClass || 'mdt-message', _.message, true)
+
+    _.toast.appendChild(before)
+    _.toast.appendChild(status)
     _.toast.appendChild(content)
 
-    actionBtn = createElem('span', 'mdt-action')
+    close = createElem('div', 'toast-close')
+    actionBtn = createElem('img', 'toast-action-ico mdt-action')
+    actionBtn.src = _options.actionIcoSrc;
+    close.appendChild(actionBtn)
 
     if (_options.interaction) {
-        actionBtn.innerText = _options.actionText
-        actionBtn.tabIndex = 0
+        close.tabIndex = 0
         _.toast.classList.add('mdt--interactive')
-        _.toast.appendChild(actionBtn)
+        _.toast.appendChild(close)
     }
 
     _.toast.addEventListener('click', evtHandler, false)
